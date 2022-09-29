@@ -14,8 +14,21 @@ public class CentroDistribuicao {
     public static final int MAX_ALCOOL = 2500;
     public static final int MAX_GASOLINA = 10000;
 
-    public CentroDistribuicao(int tAditivo, int tGasolina, int tAlcool1, int tAlcool2) {
+    private int tAditivo;
+    private int tGasolina;
+    private int tAlcool;
+    private SITUACAO situacao;
 
+    public CentroDistribuicao(int tAditivo, int tGasolina, int tAlcool) {
+        if (tAditivo > MAX_ADITIVO || tAditivo < 0 ||
+            tGasolina > MAX_GASOLINA || tGasolina < 0 ||
+            tAlcool > MAX_ADITIVO || tAlcool < 0)
+            throw new IllegalArgumentException();
+
+        this.tAditivo = tAditivo;
+        this.tGasolina = tGasolina;
+        this. tAlcool = tAlcool;
+        defineSituacao();
     }
 
     public void defineSituacao() {
@@ -23,23 +36,19 @@ public class CentroDistribuicao {
     }
 
     public SITUACAO getSituacao() {
-        return null;
+        return this.situacao;
     }
 
     public int getGasolina() {
-        return -1;
+        return this.tGasolina;
     }
 
     public int getAditivo() {
-        return -1;
+        return this.tAditivo;
     }
 
-    public int getAlcool1() {
-        return -1;
-    }
-
-    public int getAlcool2() {
-        return -1;
+    public int getAlcool() {
+        return this.tAlcool;
     }
 
     public int recebeAditivo(int qtdade) {
@@ -55,6 +64,11 @@ public class CentroDistribuicao {
     }
 
     public int[] encomendaCombustivel(int qtdade, TIPOPOSTO tipoPosto) {
+        if (qtdade <= 0)
+            return new int[]{-7};
+        if (situacao == SITUACAO.EMERGENCIA && tipoPosto != TIPOPOSTO.ESTRATEGICO)
+            return new int[]{-14};
+        
         return null;
     }
 }
