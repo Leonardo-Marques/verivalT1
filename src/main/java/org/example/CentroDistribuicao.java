@@ -32,7 +32,16 @@ public class CentroDistribuicao {
     }
 
     public void defineSituacao() {
-
+        if (tAlcool < MAX_ALCOOL * 0.25 ||
+            tGasolina < MAX_GASOLINA * 0.25 ||
+            tAditivo < MAX_ADITIVO * 0.25)
+            this.situacao = SITUACAO.EMERGENCIA;
+        else if (tAlcool < MAX_ALCOOL * 0.5 ||
+                tGasolina < MAX_GASOLINA * 0.5 ||
+                tAditivo < MAX_ADITIVO * 0.5)
+            this.situacao = SITUACAO.SOBRAVISO;
+        else
+            this.situacao = SITUACAO.NORMAL;
     }
 
     public SITUACAO getSituacao() {
@@ -52,15 +61,27 @@ public class CentroDistribuicao {
     }
 
     public int recebeAditivo(int qtdade) {
-        return -1;
+        if (qtdade <= 0) return -1;
+        int canReceive = qtdade + tAditivo > MAX_ADITIVO ? MAX_ADITIVO - tAditivo : qtdade;
+        tAditivo += canReceive;
+        defineSituacao();
+        return canReceive;
     }
 
     public int recebeGasolina(int qtdade) {
-        return -1;
+        if (qtdade <= 0) return -1;
+        int canReceive = qtdade + tGasolina > MAX_GASOLINA ? MAX_GASOLINA - tGasolina : qtdade;
+        tGasolina += canReceive;
+        defineSituacao();
+        return canReceive;
     }
 
     public int recebeAlcool(int qtdade) {
-        return -1;
+        if (qtdade <= 0) return -1;
+        int canReceive = qtdade + tAlcool > MAX_ALCOOL ? MAX_ALCOOL - tAlcool : qtdade;
+        tAlcool += canReceive;
+        defineSituacao();
+        return canReceive;
     }
 
     public int[] encomendaCombustivel(int qtdade, TIPOPOSTO tipoPosto) {
@@ -68,7 +89,23 @@ public class CentroDistribuicao {
             return new int[]{-7};
         if (situacao == SITUACAO.EMERGENCIA && tipoPosto != TIPOPOSTO.ESTRATEGICO)
             return new int[]{-14};
-        
-        return null;
+
+        if (situacao == SITUACAO.EMERGENCIA || (situacao == SITUACAO.SOBRAVISO && tipoPosto == TIPOPOSTO.COMUM)) {
+            qtdade /= 2;
+        }
+
+        int aditivoAfter = tAditivo - (int)(qtdade * 0.05);
+        int alcoolAfter = tAlcool - (int)(qtdade * 0.25);
+        int gasolinaAfter = tGasolina - (int)(qtdade * 0.7);
+
+        if (aditivoAfter < 0 || alcoolAfter < 0 || gasolinaAfter < 0)
+            return new int[]{-21};
+
+        tAditivo = aditivoAfter;
+        tAlcool = alcoolAfter;
+        tGasolina = gasolinaAfter;
+        defineSituacao();
+
+        return new int[]{tAditivo, tGasolina, tAlcool};
     }
 }
