@@ -1,16 +1,15 @@
+import org.example.CentroDistribuicao;
 import org.junit.jupiter.api.*;
 public class CentroDistribuicaoTest {
-    private CentroDistribuicaoTest centroDistribuicaoTest = null;
+    private CentroDistribuicao centroDistribuicao = null;
 
-//    @BeforeEach
-//    void setUp() {
-//        gerenciaLugares = new GerenciaLugares();
-//    }
-//
-//    @Test
-//    public void QP1A1O2(){
-//        gerenciaLugares.populaAssentos(30);
-//        int result = gerenciaLugares.verificaLugar("F20A12");
-//        Assertions.assertEquals(3,result);
-//    }
+    @BeforeEach
+    void setUp() {
+        centroDistribuicao = new CentroDistribuicao(500,10000,2500);
+    }
+
+    @Test
+    public void tst(){
+        Assertions.assertEquals(500,centroDistribuicao.getAditivo());
+    }
 }

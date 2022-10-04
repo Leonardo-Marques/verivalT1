@@ -22,7 +22,7 @@ public class CentroDistribuicao {
     public CentroDistribuicao(int tAditivo, int tGasolina, int tAlcool) {
         if (tAditivo > MAX_ADITIVO || tAditivo < 0 ||
             tGasolina > MAX_GASOLINA || tGasolina < 0 ||
-            tAlcool > MAX_ADITIVO || tAlcool < 0)
+            tAlcool > MAX_ALCOOL || tAlcool < 0)
             throw new IllegalArgumentException();
 
         this.tAditivo = tAditivo;
