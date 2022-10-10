@@ -138,10 +138,11 @@ public class CentroDistribuicaoTest {
             "0,10000,2500,ESTRATEGICO",
             "500,0,2500,ESTRATEGICO",
             "500,10000,0,ESTRATEGICO",
+            "500,10000,1,ESTRATEGICO",
     })
     public void S4P2(int qtAditivo, int qtGasolina, int qtAlcool, CentroDistribuicao.TIPOPOSTO st) {
         CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool);
-        int pedido = 100;
+        int pedido = 1000;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, st));
 
         String resultE = "[-21]";
@@ -229,9 +230,32 @@ public class CentroDistribuicaoTest {
 //    public int getAlcool() {
 
     @Test
-    public void getSituacaoTest(){
+    public void getSituacaoNormalTest(){
         CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL);
         Assertions.assertEquals(CentroDistribuicao.SITUACAO.NORMAL,centroDistribuicao1.getSituacao());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "200,10000,2500",
+            "500,4000,2500 ",
+            "500,10000,1000",
+    })
+    public void getSituacaoSobreavisoTest(int qntAdt, int qntGas,int qntAlc){
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,qntGas,qntAlc);
+        Assertions.assertEquals(CentroDistribuicao.SITUACAO.SOBRAVISO,centroDistribuicao1.getSituacao());
+    }
+
+
+    @ParameterizedTest
+    @CsvSource({
+            "1,10000,2500",
+            "500,1,2500 ",
+            "500,10000,1",
+    })
+    public void getSituacaoEmergencialTest(int qntAdt, int qntGas,int qntAlc){
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,qntGas,qntAlc);
+        Assertions.assertEquals(CentroDistribuicao.SITUACAO.EMERGENCIA,centroDistribuicao1.getSituacao());
     }
 
     @Test
