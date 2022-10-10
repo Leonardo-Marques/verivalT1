@@ -16,68 +16,74 @@ public class CentroDistribuicaoTest {
 
     @Test
     public void S1P1() {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO/2,MAX_GASOLINA/2,MAX_ALCOOL/2);
+        CentroDistribuicao centroDistribuicao1 = new
+                CentroDistribuicao(MAX_ADITIVO / 2, MAX_GASOLINA / 2, MAX_ALCOOL / 4, MAX_ALCOOL / 4);
         int pedido = 100;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, CentroDistribuicao.TIPOPOSTO.COMUM));
 
-        String adt = String.valueOf((int)(MAX_ADITIVO/2) - (int)(0.05*pedido));
-        String gas = String.valueOf((int)(MAX_GASOLINA/2) - (int)(0.7*pedido));
-        String alc = String.valueOf((int)(MAX_ALCOOL/2) - (int)(0.25*pedido));
+        String adt = String.valueOf((int) (MAX_ADITIVO / 2) - (int) (0.05 * pedido));
+        String gas = String.valueOf((int) (MAX_GASOLINA / 2) - (int) (0.7 * pedido));
+        String alc1 = String.valueOf((int) (MAX_ALCOOL / 4) - (int) (0.125 * pedido));
+        String alc2 = String.valueOf((int) (MAX_ALCOOL / 4) - (int) (0.125 * pedido));
 
-        String resultE = "["+adt+", "+gas+", "+alc+"]";
+        String resultE = "[" + "0, " + adt + ", " + gas + ", " + alc1 + ", " + alc2 + "]";
 
-        Assertions.assertEquals(result,resultE);
+        Assertions.assertEquals(result, resultE);
     }
+
     @Test
     public void S1P2() {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(CentroDistribuicao.MAX_ADITIVO/2,CentroDistribuicao.MAX_GASOLINA/2,CentroDistribuicao.MAX_ALCOOL/2);
+        CentroDistribuicao centroDistribuicao1 = new
+                CentroDistribuicao(MAX_ADITIVO / 2, MAX_GASOLINA / 2, MAX_ALCOOL / 4, MAX_ALCOOL / 4);
         int pedido = 100;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(100, CentroDistribuicao.TIPOPOSTO.ESTRATEGICO));
-        String adt = String.valueOf((int)(MAX_ADITIVO/2) - (int)(0.05*pedido));
-        String gas = String.valueOf((int)(MAX_GASOLINA/2) - (int)(0.7*pedido));
-        String alc = String.valueOf((int)(MAX_ALCOOL/2) - (int)(0.25*pedido));
+        String adt = String.valueOf((int) (MAX_ADITIVO / 2) - (int) (0.05 * pedido));
+        String gas = String.valueOf((int) (MAX_GASOLINA / 2) - (int) (0.7 * pedido));
+        String alc1 = String.valueOf((int) (MAX_ALCOOL / 4) - (int) (0.125 * pedido));
+        String alc2 = String.valueOf((int) (MAX_ALCOOL / 4) - (int) (0.125 * pedido));
 
-        String resultE = "["+adt+", "+gas+", "+alc+"]";
+        String resultE = "[" + "0, " + adt + ", " + gas + ", " + alc1 + ", " + alc2 + "]";
 
-        Assertions.assertEquals(result,resultE);
+        Assertions.assertEquals(result, resultE);
     }
 
     @ParameterizedTest
     @CsvSource({
             "125,10000,2500,COMUM",
             "500,2500,2500,COMUM",
-            "500,10000,625,COMUM",
+            "500,10000,626,COMUM",
     })
     public void S2P1(int qtAditivo, int qtGasolina, int qtAlcool, CentroDistribuicao.TIPOPOSTO st) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool/2,qtAlcool/2);
 
         int pedido = 100;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, st));
-        String adt = String.valueOf((int)(qtAditivo) - (int)(0.05*(pedido/2)));
-        String gas = String.valueOf((int)(qtGasolina) - (int)(0.7*(pedido/2)));
-        String alc = String.valueOf((int)(qtAlcool) - (int)(0.25*(pedido/2)));
+        String adt = String.valueOf((int) (qtAditivo) - (int) (0.05 * (pedido/2)));
+        String gas = String.valueOf((int) (qtGasolina) - (int) (0.7 * (pedido/2)));
+        String alc1 = String.valueOf((int) (qtAlcool/2) - (int) (0.125 * (pedido/2)));
+        String alc2 = String.valueOf((int) (qtAlcool/2) - (int) (0.125 * (pedido/2)));
 
-        String resultE = "["+adt+", "+gas+", "+alc+"]";
+        String resultE = "[" + "0, " + adt + ", " + gas + ", " + alc1 + ", " + alc2 + "]";
 
-        Assertions.assertEquals(result,resultE);
-
+        Assertions.assertEquals(result, resultE);
     }
     @ParameterizedTest
     @CsvSource({
             "125,10000,2500,ESTRATEGICO",
             "500,2500,2500,ESTRATEGICO",
-            "500,10000,625,ESTRATEGICO",
+            "500,10000,626,ESTRATEGICO",
     })
     public void S2P2(int qtAditivo, int qtGasolina, int qtAlcool, CentroDistribuicao.TIPOPOSTO st) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool/2,qtAlcool/2);
 
         int pedido = 100;
-        String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido,st));
-        String adt = String.valueOf((int)(qtAditivo) - (int)(0.05*pedido));
-        String gas = String.valueOf((int)(qtGasolina) - (int)(0.7*pedido));
-        String alc = String.valueOf((int)(qtAlcool) - (int)(0.25*pedido));
+        String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, st));
+        String adt = String.valueOf((int) (qtAditivo) - (int) (0.05 * (pedido)));
+        String gas = String.valueOf((int) (qtGasolina) - (int) (0.7 * (pedido)));
+        String alc1 = String.valueOf((int) (qtAlcool/2) - (int) (0.125 * (pedido)));
+        String alc2 = String.valueOf((int) (qtAlcool/2) - (int) (0.125 * (pedido)));
 
-        String resultE = "["+adt+", "+gas+", "+alc+"]";
+        String resultE = "[" + "0, " + adt + ", " + gas + ", " + alc1 + ", " + alc2 + "]";
 
         Assertions.assertEquals(result,resultE);
     }
@@ -86,13 +92,13 @@ public class CentroDistribuicaoTest {
     @CsvSource({
             "5,10000,2500,COMUM",
             "500,100,2500,COMUM",
-            "500,10000,25,COMUM",
+            "500,10000,26,COMUM",
     })
     public void S3P1(int qtAditivo, int qtGasolina, int qtAlcool, CentroDistribuicao.TIPOPOSTO st) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool/2,qtAlcool/2);
         int pedido = 100;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, st));
-        String resultE = "[-14]";
+        String resultE = "[-14, "+qtAditivo+", "+qtGasolina+", "+qtAlcool/2+", "+qtAlcool/2+"]";
         Assertions.assertEquals(result,resultE);
     }
 
@@ -103,15 +109,16 @@ public class CentroDistribuicaoTest {
             "500,10000,25,ESTRATEGICO",
     })
     public void S3P2(int qtAditivo, int qtGasolina, int qtAlcool, CentroDistribuicao.TIPOPOSTO st) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool/2,qtAlcool/2);
 
         int pedido = 100;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, st));
-        String adt = String.valueOf((int)(qtAditivo) - (int)(0.05*(pedido/2)));
-        String gas = String.valueOf((int)(qtGasolina) - (int)(0.7*(pedido/2)));
-        String alc = String.valueOf((int)(qtAlcool) - (int)(0.25*(pedido/2)));
+        String adt = String.valueOf((int) (qtAditivo) - (int) (0.05 * (pedido/2)));
+        String gas = String.valueOf((int) (qtGasolina) - (int) (0.7 * (pedido/2)));
+        String alc1 = String.valueOf((int) (qtAlcool/2) - (int) (0.125 * (pedido/2)));
+        String alc2 = String.valueOf((int) (qtAlcool/2) - (int) (0.125 * (pedido/2)));
 
-        String resultE = "["+adt+", "+gas+", "+alc+"]";
+        String resultE = "[" + "0, " + adt + ", " + gas + ", " + alc1 + ", " + alc2 + "]";
 
         Assertions.assertEquals(result,resultE);
     }
@@ -123,11 +130,11 @@ public class CentroDistribuicaoTest {
             "500,10000,0,COMUM",
     })
     public void S4P1(int qtAditivo, int qtGasolina, int qtAlcool, CentroDistribuicao.TIPOPOSTO st) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool/2,qtAlcool/2);
         int pedido = 100;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, st));
 
-        String resultE = "[-21]";
+        String resultE = "[-21, "+qtAditivo+", "+qtGasolina+", "+qtAlcool/2+", "+qtAlcool/2+"]";
 
         Assertions.assertEquals(result,resultE);
     }
@@ -138,24 +145,24 @@ public class CentroDistribuicaoTest {
             "0,10000,2500,ESTRATEGICO",
             "500,0,2500,ESTRATEGICO",
             "500,10000,0,ESTRATEGICO",
-            "500,10000,1,ESTRATEGICO",
+            "500,10000,2,ESTRATEGICO",
     })
     public void S4P2(int qtAditivo, int qtGasolina, int qtAlcool, CentroDistribuicao.TIPOPOSTO st) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool);
-        int pedido = 1000;
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qtAditivo,qtGasolina,qtAlcool/2,qtAlcool/2);
+        int pedido = 100;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, st));
 
-        String resultE = "[-21]";
+        String resultE = "[-21, "+qtAditivo+", "+qtGasolina+", "+qtAlcool/2+", "+qtAlcool/2+"]";
 
         Assertions.assertEquals(result,resultE);
     }
 
     @Test
     public void S1P1E1() {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
         int pedido = -1;
         String result = Arrays.toString(centroDistribuicao1.encomendaCombustivel(pedido, CentroDistribuicao.TIPOPOSTO.COMUM));
-        String resultE = "[-7]";
+        String resultE = "[-7, "+MAX_ADITIVO+", "+MAX_GASOLINA+", "+MAX_ALCOOL/2+", "+MAX_ALCOOL/2+"]";
         Assertions.assertEquals(result,resultE);
     }
 
@@ -169,7 +176,7 @@ public class CentroDistribuicaoTest {
             "10000,10,0",
     })
     public void recebeComb(int qntGas, int qntPosta, int resultE) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,qntGas,MAX_ALCOOL);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,qntGas,MAX_ALCOOL/2,MAX_ALCOOL/2);
         int result = centroDistribuicao1.recebeGasolina(qntPosta);
         Assertions.assertEquals(result,resultE);
     }
@@ -182,20 +189,19 @@ public class CentroDistribuicaoTest {
             "500,10,0",
     })
     public void recebeAdt(int qntAdt, int qntPosta, int resultE) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,MAX_GASOLINA,MAX_ALCOOL);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
         int result = centroDistribuicao1.recebeAditivo(qntPosta);
         Assertions.assertEquals(result,resultE);
     }
 
     @ParameterizedTest
     @CsvSource({
-            "2499,10,1",
             "2400,50,50 ",
             "2400,-1,-1",
             "2500,10,0",
     })
     public void recebeAlc(int qntAlc, int qntPosta, int resultE) {
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,qntAlc);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,qntAlc/2,qntAlc/2);
         int result = centroDistribuicao1.recebeAlcool(qntPosta);
         Assertions.assertEquals(result,resultE);
     }
@@ -205,33 +211,29 @@ public class CentroDistribuicaoTest {
 
     @Test
     public void contrutorOK(){
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL);
-        Assertions.assertEquals(500,centroDistribuicao1.getAditivo());
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
+        Assertions.assertEquals(500,centroDistribuicao1.gettAditivo());
     }
     @Test
     public void contrutorErro(){
         assertThrows(IllegalArgumentException.class,
                 ()->{
-                    CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(600,MAX_GASOLINA,MAX_ALCOOL);
+                    CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(600,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
                 });
 
     }
+    @Test
+    public void contrutorErro2() {
+        assertThrows(IllegalArgumentException.class,
+                () -> {
+                    CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO, MAX_GASOLINA, 1000, 1001);
+                });
+    }
 
-    //Testes Gets
-//    public CentroDistribuicao.SITUACAO getSituacao() {
-//        return this.situacao;
-//    }
-//
-//    public int getGasolina() {
-//
-//
-//    public int getAditivo() {
-//
-//    public int getAlcool() {
-
+//    //Testes Gets
     @Test
     public void getSituacaoNormalTest(){
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
         Assertions.assertEquals(CentroDistribuicao.SITUACAO.NORMAL,centroDistribuicao1.getSituacao());
     }
 
@@ -242,7 +244,7 @@ public class CentroDistribuicaoTest {
             "500,10000,1000",
     })
     public void getSituacaoSobreavisoTest(int qntAdt, int qntGas,int qntAlc){
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,qntGas,qntAlc);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,qntGas,qntAlc/2,qntAlc/2);
         Assertions.assertEquals(CentroDistribuicao.SITUACAO.SOBRAVISO,centroDistribuicao1.getSituacao());
     }
 
@@ -251,27 +253,32 @@ public class CentroDistribuicaoTest {
     @CsvSource({
             "1,10000,2500",
             "500,1,2500 ",
-            "500,10000,1",
+            "500,10000,2",
     })
     public void getSituacaoEmergencialTest(int qntAdt, int qntGas,int qntAlc){
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,qntGas,qntAlc);
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(qntAdt,qntGas,qntAlc/2,qntAlc/2);
         Assertions.assertEquals(CentroDistribuicao.SITUACAO.EMERGENCIA,centroDistribuicao1.getSituacao());
     }
 
     @Test
     public void getGasolinaTest(){
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL);
-        Assertions.assertEquals(MAX_GASOLINA,centroDistribuicao1.getGasolina());
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
+        Assertions.assertEquals(MAX_GASOLINA,centroDistribuicao1.gettGasolina());
     }
     @Test
-    public void getAlcoolTest(){
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL);
-        Assertions.assertEquals(MAX_ALCOOL,centroDistribuicao1.getAlcool());
+    public void getAlcool1Test(){
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
+        Assertions.assertEquals(MAX_ALCOOL/2,centroDistribuicao1.gettAlcool1());
+    }
+    @Test
+    public void getAlcool2Test(){
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
+        Assertions.assertEquals(MAX_ALCOOL/2,centroDistribuicao1.gettAlcool2());
     }
     @Test
     public void getAditivoTest(){
-        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL);
-        Assertions.assertEquals(MAX_ADITIVO,centroDistribuicao1.getAditivo());
+        CentroDistribuicao centroDistribuicao1 = new CentroDistribuicao(MAX_ADITIVO,MAX_GASOLINA,MAX_ALCOOL/2,MAX_ALCOOL/2);
+        Assertions.assertEquals(MAX_ADITIVO,centroDistribuicao1.gettAditivo());
     }
 
 
@@ -279,20 +286,3 @@ public class CentroDistribuicaoTest {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
