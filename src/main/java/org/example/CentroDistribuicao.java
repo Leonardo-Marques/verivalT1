@@ -87,6 +87,8 @@ public class CentroDistribuicao {
     public int[] encomendaCombustivel(int qtdade, TIPOPOSTO tipoPosto) {
         if (qtdade <= 0)
             return new int[]{-7};
+        if (tAditivo <= 0 || tAlcool <= 0 || tGasolina <= 0)
+            return new int[]{-21};
         if (situacao == SITUACAO.EMERGENCIA && tipoPosto != TIPOPOSTO.ESTRATEGICO)
             return new int[]{-14};
 
